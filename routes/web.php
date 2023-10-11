@@ -11,9 +11,9 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ErrorController;
 
 use App\Http\Middleware\LoginMiddleware;
-
 
 //**Routes ADMIN here */
 
@@ -84,3 +84,7 @@ Route::get('/login', [HomeController::class, 'login'])->name('loginPage');
 Route::get('/register', [HomeController::class, 'register'])->name('registerPage');
 Route::get('/detail-product', [HomeController::class, 'detail_product'])->name('detailProductPage');
 Route::get('/cart', [HomeController::class, 'cart'])->name('cartPage');
+
+
+// error 
+Route::get('/admin/error', [ErrorController::class, 'index'])->name('admin.error');

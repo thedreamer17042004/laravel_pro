@@ -4,7 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 class Authenticate extends Middleware
 {
     /**
@@ -22,15 +24,18 @@ class Authenticate extends Middleware
 
         $user = Auth::user();
 
+
+
         $route = $request->route()->getName();
 
-        dd($user->can($route));
-        // dd($route);
+        if($user->cant($route)) {
+            return redirect()->route('admin.error',
+             ['code'=>403]
+            );
+        }
+
+        
+        return $next($request);
      }
-    // protected function redirectTo($request)
-    // {
-    //     if (!$request->expectsJson()) {
-    //         return route('login');
-    //     }
-    // }
+   
 }

@@ -6,7 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use DB;
+use App\Models\Role;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -62,6 +63,35 @@ class User extends Authenticatable
      return in_array($route, $routes) ? true :false;
     }
     public function routes() {
-        return ['admin.dashboard'];
-    }
+
+
+        $data = [];
+            $roles = $this->roles();
+    
+    
+        foreach($this->roles as $role) {
+    
+            array_push($data,$role->id);
+        }
+        $permission_role = DB::table('permission_role')->whereIn('role_id', $data)->get();
+    
+        $permission__ = [];
+        foreach($permission_role as $permi) {
+            array_push($permission__, $permi->permission_id);
+        }
+    
+    
+        $per = DB::table('permissions')->whereIn('id', $permission__)->get();
+    
+    
+    
+        $final_permission = [];
+    
+        foreach($per as $ps ){
+            array_push($final_permission, $ps->name);
+        }
+    
+       
+            return $final_permission;
+        }
 }

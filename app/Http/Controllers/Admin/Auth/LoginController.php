@@ -49,7 +49,16 @@ class LoginController extends Controller
                 $role_id = $role->id;
             }
 
-            if ($role_id == 1) {
+            // if ($role_id == 1) {
+
+            //     $request->session()->regenerate();
+
+            //     return redirect()->route('admin.dashboard')->with('logined', 'Logined success!!');
+            // } else {
+
+            //     return redirect()->route('loginAdmin')->with('message', 'You are not authorized!!');
+            // }
+            if ($role_id) {
 
                 $request->session()->regenerate();
 
