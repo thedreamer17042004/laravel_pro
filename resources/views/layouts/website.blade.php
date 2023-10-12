@@ -10,48 +10,61 @@
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{asset('website/css/open-iconic-bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('website/css/animate.css')}}">
+    <link rel="stylesheet" href="{{ asset('website/css/open-iconic-bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('website/css/animate.css') }}">
 
-    <link rel="stylesheet" href="{{asset('website/css/owl.carousel.min.css')}}">
-    <link rel="stylesheet" href="{{asset('website/css/owl.theme.default.min.css')}}">
-    <link rel="stylesheet" href="{{asset('website/css/magnific-popup.css')}}">
+    <link rel="stylesheet" href="{{ asset('website/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('website/css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('website/css/magnific-popup.css') }}">
 
-    <link rel="stylesheet" href="{{asset('website/css/aos.css')}}">
+    <link rel="stylesheet" href="{{ asset('website/css/aos.css') }}">
 
-    <link rel="stylesheet" href="{{asset('website/css/ionicons.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('website/css/ionicons.min.css') }}">
 
-    <link rel="stylesheet" href="{{asset('website/css/bootstrap-datepicker.css')}}">
-    <link rel="stylesheet" href="{{asset('website/css/jquery.timepicker.css')}}">
+    <link rel="stylesheet" href="{{ asset('website/css/bootstrap-datepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('website/css/jquery.timepicker.css') }}">
 
 
-    <link rel="stylesheet" href="{{asset('website/css/flaticon.css')}}">
-    <link rel="stylesheet" href="{{asset('website/css/icomoon.css')}}">
-    <link rel="stylesheet" href="{{asset('website/css/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('website/css/flaticon.css') }}">
+    <link rel="stylesheet" href="{{ asset('website/css/icomoon.css') }}">
+    <link rel="stylesheet" href="{{ asset('website/css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+    crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
 </head>
 
 <body>
+
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a class="navbar-brand" href="index.html"><span class="flaticon-pizza-1 mr-1"></span>Pizza<br><small>Delicous</small></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="index.html"><span
+                    class="flaticon-pizza-1 mr-1"></span>Pizza<br><small>Delicous</small></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="oi oi-menu"></span> Menu
             </button>
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active"><a href="{{ url('/') }}" class="nav-link">Home</a></li>
                     <li class="nav-item"><a href="{{ url('/menu') }}" class="nav-link">Menu</a></li>
-                    <li class="nav-item"><a href="{{url('/service')}}" class="nav-link">Services</a></li>
-                    <li class="nav-item"><a href="{{route('blogtPage')}}" class="nav-link">Blog</a></li>
-                    <li class="nav-item"><a href="{{url('/about')}}" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="{{route('contactPage')}}" class="nav-link">Contact</a></li>
-                    <li class="nav-item"><a href="{{route('loginPage')}}" class="nav-link">Login</a></li>
-                    <li class="nav-item"><a href="{{route('cartPage')}}" class="nav-link">Cart<span class="badge badge-primary">4</span></a></li>
-                    <li class="nav-item"><a href="{{route('contactPage')}}" class="nav-link">Favorite<span class="badge badge-success">5</span></a></li>
+                    <li class="nav-item"><a href="{{ url('/service') }}" class="nav-link">Services</a></li>
+                    <li class="nav-item"><a href="{{ route('blogtPage') }}" class="nav-link">Blog</a></li>
+                    <li class="nav-item"><a href="{{ url('/about') }}" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="{{ route('contactPage') }}" class="nav-link">Contact</a></li>
+                    @if (Auth::guard('cus')->check())
+                        <li class="nav-item"><a class="nav-link">Hi {{ Auth::guard('cus')->user()->name }}</a></li>
+                        <li class="nav-item"><a href="{{route('logout.logout')}}" class="nav-link">Logout</a></li>
+                    @else
+                        <li class="nav-item"><a href="{{ route('loginPage') }}" class="nav-link">Login</a></li>
+                    @endif
+                    <li class="nav-item"><a href="{{ route('cartPage') }}" class="nav-link">Cart<span
+                                class="badge badge-primary">{{ $cart->getTotalQuantity() }}</span></a></li>
                     <li class="nav-item" style="display: flex;align-items:center;">
                         <form action="" style="display: flex;">
                             <input type="search" class="search_for" placeholder="search here...">
-                            <i class="icon-search" style="display: flex;
+                            <i class="icon-search"
+                                style="display: flex;
     align-items: center;
     padding: 0px 5px;
     cursor: pointer;"></i>
@@ -74,7 +87,8 @@
                 <div class="col-lg-3 col-md-6 mb-5 mb-md-5">
                     <div class="ftco-footer-widget mb-4">
                         <h2 class="ftco-heading-2">About Us</h2>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                            there live the blind texts.</p>
                         <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
                             <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
                             <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -88,7 +102,8 @@
                         <div class="block-21 mb-4 d-flex">
                             <a class="blog-img mr-4" style="background-image: url(website/images/image_1.jpg);"></a>
                             <div class="text">
-                                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
+                                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control
+                                        about</a></h3>
                                 <div class="meta">
                                     <div><a href="#"><span class="icon-calendar"></span> Sept 15, 2018</a></div>
                                     <div><a href="#"><span class="icon-person"></span> Admin</a></div>
@@ -99,7 +114,8 @@
                         <div class="block-21 mb-4 d-flex">
                             <a class="blog-img mr-4" style="background-image: url(website/images/image_2.jpg);"></a>
                             <div class="text">
-                                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
+                                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control
+                                        about</a></h3>
                                 <div class="meta">
                                     <div><a href="#"><span class="icon-calendar"></span> Sept 15, 2018</a></div>
                                     <div><a href="#"><span class="icon-person"></span> Admin</a></div>
@@ -125,9 +141,12 @@
                         <h2 class="ftco-heading-2">Have a Questions?</h2>
                         <div class="block-23 mb-3">
                             <ul>
-                                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-                                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-                                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St.
+                                        Mountain View, San Francisco, California, USA</span></li>
+                                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2
+                                            392 3929 210</span></a></li>
+                                <li><a href="#"><span class="icon icon-envelope"></span><span
+                                            class="text">info@yourdomain.com</span></a></li>
                             </ul>
                         </div>
                     </div>
@@ -137,10 +156,13 @@
                 <div class="col-md-12 text-center">
 
                     <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;<script>
+                        Copyright &copy;
+                        <script>
                             document.write(new Date().getFullYear());
-                        </script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                        </script> All rights reserved | This template is made with <i class="icon-heart"
+                            aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </p>
                 </div>
             </div>
         </div>
@@ -156,23 +178,40 @@
 
 
 
-    <script src="{{asset('website/js/jquery.min.js')}}"></script>
-    <script src="{{asset('website/js/jquery-migrate-3.0.1.min.js')}}"></script>
-    <script src="{{asset('website/js/popper.min.js')}}"></script>
-    <script src="{{asset('website/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('website/js/jquery.easing.1.3.js')}}"></script>
-    <script src="{{asset('website/js/jquery.waypoints.min.js')}}"></script>
-    <script src="{{asset('website/js/jquery.stellar.min.js')}}"></script>
-    <script src="{{asset('website/js/owl.carousel.min.js')}}"></script>
-    <script src="{{asset('website/js/jquery.magnific-popup.min.js')}}"></script>
-    <script src="{{asset('website/js/aos.js')}}"></script>
-    <script src="{{asset('website/js/jquery.animateNumber.min.js')}}"></script>
-    <script src="{{asset('website/js/bootstrap-datepicker.js')}}"></script>
-    <script src="{{asset('website/js/jquery.timepicker.min.js')}}"></script>
-    <script src="{{asset('website/js/scrollax.min.js')}}"></script>
+    <script src="{{ asset('website/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('website/js/jquery-migrate-3.0.1.min.js') }}"></script>
+    <script src="{{ asset('website/js/popper.min.js') }}"></script>
+    <script src="{{ asset('website/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('website/js/jquery.easing.1.3.js') }}"></script>
+    <script src="{{ asset('website/js/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ asset('website/js/jquery.stellar.min.js') }}"></script>
+    <script src="{{ asset('website/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('website/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('website/js/aos.js') }}"></script>
+    <script src="{{ asset('website/js/jquery.animateNumber.min.js') }}"></script>
+    <script src="{{ asset('website/js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('website/js/jquery.timepicker.min.js') }}"></script>
+    <script src="{{ asset('website/js/scrollax.min.js') }}"></script>
     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script> -->
-    <!-- <script src="{{asset('website/js/google-map.js')}}"></script> -->
-    <script src="{{asset('website/js/main.js')}}"></script>
+    <!-- <script src="{{ asset('website/js/google-map.js') }}"></script> -->
+    <script src="{{ asset('website/js/main.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    @if (Session::has('message'))
+        <script>
+            toastr.options = {
+                "progressBar": true,
+                "closeButton": true
+            }
+            toastr.success("{{ Session::get('message') }}", 'Success', {
+                timeOut: 12000
+            });
+        </script>
+    @endif
+
+
 
 </body>
 

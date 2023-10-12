@@ -1,5 +1,8 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<link rel="stylesheet" href="{{ asset('website/css/login.css')  }}">
+<link rel="stylesheet" href="{{ asset('website/css/login.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <!------ Include the above in your HEAD tag ---------->
 
@@ -8,15 +11,22 @@
         <div class="row">
             <div class="col-md-4 login-sec">
                 <h2 class="text-center">Login Now</h2>
-                <form class="login-form">
+                <form class="login-form" action="{{route('post_login')}}" method="POST">
+                    @csrf
                     <div class="form-group">
                         <label for="exampleInputEmail1" class="text-uppercase">Email</label>
-                        <input type="text" class="form-control" placeholder="">
+                        <input type="text" class="form-control" name="email" value="{{old('email')}}" placeholder="">
+                        @if ($errors->has('email'))
+                            <div class="error">{{ $errors->first('email') }}</div>
+                        @endif
 
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1" class="text-uppercase">Password</label>
-                        <input type="password" class="form-control" placeholder="">
+                        <input type="password" class="form-control" value="{{old('passsword')}}" name="password" placeholder="">
+                        @if ($errors->has('password'))
+                            <div class="error">{{ $errors->first('password') }}</div>
+                        @endif
                     </div>
 
 
@@ -29,7 +39,8 @@
                     </div>
 
                 </form>
-                <div class="copy-text">Do you have a account? <i class="fa fa-heart"></i> by     <a href="{{route('registerPage')}}">Register</a>  </div>
+                <div class="copy-text">Do you have a account? <i class="fa fa-heart"></i> by <a
+                        href="{{ route('registerPage') }}">Register</a> </div>
             </div>
             <div class="col-md-8 banner-sec">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -40,29 +51,40 @@
                     </ol>
                     <div class="carousel-inner" role="listbox">
                         <div class="carousel-item active">
-                            <img class="d-block img-fluid" src="https://static.pexels.com/photos/33972/pexels-photo.jpg" alt="First slide">
+                            <img class="d-block img-fluid" src="https://static.pexels.com/photos/33972/pexels-photo.jpg"
+                                alt="First slide">
                             <div class="carousel-caption d-none d-md-block">
                                 <div class="banner-text">
                                     <h2>This is Heaven</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                        nostrud exercitation</p>
                                 </div>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img class="d-block img-fluid" src="https://images.pexels.com/photos/7097/people-coffee-tea-meeting.jpg" alt="First slide">
+                            <img class="d-block img-fluid"
+                                src="https://images.pexels.com/photos/7097/people-coffee-tea-meeting.jpg"
+                                alt="First slide">
                             <div class="carousel-caption d-none d-md-block">
                                 <div class="banner-text">
                                     <h2>This is Heaven</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                        nostrud exercitation</p>
                                 </div>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img class="d-block img-fluid" src="https://images.pexels.com/photos/872957/pexels-photo-872957.jpeg" alt="First slide">
+                            <img class="d-block img-fluid"
+                                src="https://images.pexels.com/photos/872957/pexels-photo-872957.jpeg"
+                                alt="First slide">
                             <div class="carousel-caption d-none d-md-block">
                                 <div class="banner-text">
                                     <h2>This is Heaven</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                        nostrud exercitation</p>
                                 </div>
                             </div>
                         </div>
@@ -76,3 +98,29 @@
 
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+@if(Session::has('faile_login'))
+<script>
+  toastr.options = {
+    "progressBar": true,
+    "closeButton": true
+  }
+  toastr.error("{{Session::get('faile_login')}}", 'Success', {timeOut:12000});
+</script>
+@endif
+
+@if(Session::has('message_register'))
+<script>
+  toastr.options = {
+    "progressBar": true,
+    "closeButton": true
+  }
+  toastr.success("{{Session::get('message_register')}}", 'Success', {timeOut:12000});
+</script>
+@endif
+
+
+

@@ -20,7 +20,7 @@
                 <div class="col-md-4 d-flex ftco-animate">
                     <div class="blog-entry align-self-stretch">
                         <a href="{{ route('blogtDetailPage') }}" class="block-20"
-                            style="background-image: url({{$post->image}});">
+                            style="background-image: url({{asset('/admin/images/admin/')}}/{{$post->image}});">
                         </a>
                         <div class="text py-4 d-block">
                             <div class="meta">

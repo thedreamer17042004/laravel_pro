@@ -1,8 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Customer;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -62,19 +68,87 @@ class HomeController extends Controller
 
         return view('website.login');
     }
+    public function post_login(Request $request) {
+
+
+       $value = $request->validate([
+            'email'=>'required',
+            'password' => 'required'
+        ], [
+            'email.required' => "Vui lòng nhập email",
+            'password.required' => "Vui lòng nhập password"
+        ]);
+
+
+
+        if (Auth::guard('cus')->attempt($value)) {
+         
+                return redirect()->route('home.index')->with('message', 'login success');
+          
+        }else {
+            return redirect()->back()->with('faile_login', 'Email or password error');
+        }
+
+        
+    }
+    public function logout() {
+        Auth::guard('cus')->logout();
+        return redirect()->route('home.index');
+    }
     public function register() {
 
 
         return view('website.register');
+    }
+    public function post_register(Request $request) {
+
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required|unique:customers',
+            'password'=>'required'
+
+        ], [
+            'name.required' => 'Vui long nhap ten',
+            'email.required'=> "vui long nhap email",
+            'email.unique'=> 'Email da ton tai',
+            'password.required' => "Password nhap vao "
+        ]);
+
+
+       $cus = Customer::create([
+            'name'=>$request->name,
+            'email'=> $request->email,
+            'password'=>Hash::make($request->password)
+        
+        ]);
+      $user_id =  User::create([
+            'name'=>$request->name,
+            'email'=> $request->email,
+            'password'=>Hash::make($request->password)
+        
+        ]);
+
+        $role = Role::where('id', 2)->get()->first();
+
+     
+        DB::table('role_user')->insert([
+            'role_id' => $role->id,
+            'user_id'=>$user_id->id
+        ]);
+
+        return redirect()->route('loginPage')->with('message_register', 'Register successfully');
+
+
+       
     }
     public function detail_product() {
 
 
         return view('website.detail_food');
     }
-    public function cart() {
+    // public function cart() {
 
 
-        return view('website.cart');
-    }
+    //     return view('website.cart');
+    // }
 }

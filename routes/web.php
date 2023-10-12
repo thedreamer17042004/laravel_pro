@@ -12,8 +12,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ErrorController;
-
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\LoginMiddleware;
+use Illuminate\Support\Facades\Mail;
 
 //**Routes ADMIN here */
 
@@ -68,6 +72,20 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth'], 'as' => 'admin.'],
         Route::post('/edit/{id}', [UserController::class, 'update'])->name('user.update');
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
     });
+    Route::group(['prefix' => 'posts'], function () {
+        Route::get('/', [PostController::class, 'index'])->name('post.index');
+        Route::get('/create', [PostController::class, 'create'])->name('post.create');
+        Route::post('/add', [PostController::class, 'store'])->name('post.store');
+        Route::get('/edit/{id}', [PostController::class, 'edit'])->name('post.edit');
+        Route::post('/edit/{id}', [PostController::class, 'update'])->name('post.update');
+        Route::get('/delete/{id}', [PostController::class, 'delete'])->name('post.delete');
+    });
+    Route::group(['prefix' => 'profile'], function () {
+        Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
+        Route::get('/create', [ProfileController::class, 'create'])->name('profile.create');
+        Route::post('/add', [ProfileController::class, 'store'])->name('profile.store');
+      
+    });
 });
 
 
@@ -81,10 +99,31 @@ Route::get('/contact', [HomeController::class, 'index_contact'])->name('contactP
 Route::get('/blog', [HomeController::class, 'index_blog'])->name('blogtPage');
 Route::get('/blog-detail', [HomeController::class, 'index_blog_detail'])->name('blogtDetailPage');
 Route::get('/login', [HomeController::class, 'login'])->name('loginPage');
+Route::post('/login', [HomeController::class, 'post_login'])->name('post_login');
+Route::get('/logout', [HomeController::class, 'logout'])->name('logout.logout');
 Route::get('/register', [HomeController::class, 'register'])->name('registerPage');
+Route::post('/register', [HomeController::class, 'post_register'])->name('post_register');
 Route::get('/detail-product', [HomeController::class, 'detail_product'])->name('detailProductPage');
-Route::get('/cart', [HomeController::class, 'cart'])->name('cartPage');
+Route::get('/cart', [CartController::class, 'index'])->name('cartPage');
 
 
 // error 
 Route::get('/admin/error', [ErrorController::class, 'index'])->name('admin.error');
+
+// them vao gio hang 
+Route::post('/add-cart', [CartController::class, 'add'])->name('cart.add');
+Route::get('/delete/{id}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/update/{id}', [CartController::class, 'update'])->name('cart.update');
+Route::get('/clear', [CartController::class, 'clear'])->name('cart.clear');
+
+
+
+// checkout
+Route::group(['prefix' => 'checkout'], function () {
+    Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::get('/create', [CheckoutController::class, 'create'])->name('checkout.create');
+    Route::post('/add', [CheckoutController::class, 'submit_form'])->name('checkout.store');
+    Route::get('/checkout-success', [CheckoutController::class, 'form'])->name('checkout.success');
+  
+});
+

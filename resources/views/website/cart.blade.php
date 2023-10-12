@@ -1,51 +1,64 @@
 @extends('layouts.website')
 @section('content')
-<div class="container py-5">
-   <tr style="margin: 10px 0px;">
-   <button type="button" style="margin-bottom: 15px;" class="btn btn-info">Tiep tuc mua hang</button>
-       <button type="button" style="margin-bottom: 15px;" class="btn btn-success">Cap nhat gio hang</button>
-   </tr>
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Ho ten</th>
-            <th>tuoi</th>
-            <th>dia chi</th>
-            <th>So dien thoai</th>
-            <th>So luong</th>
-            <th>Subtotal</th>
-            <th>Action</th>
+    <div class="container py-5">
+        <tr style="margin: 10px 0px;">
+            <a href="#shop_home" style="margin-bottom: 15px;" class="btn btn-info">Tiep tuc mua hang</a>
         </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td >Nguyen van nam</td>
-            <td>20</td>
-            <td>trung tien</td>
-            <td>04938984334</td>
-            <td>
-                <input type="text" value="1">
-            </td>
-            <td>
-                12
-            </td>
-            <td>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($cartItems as $value => $cart)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $cart['name'] }}</td>
+                        <td>
+                            <img src="{{ asset('admin/images/admin') }}/{{ $cart['image'] }}" width="100px" alt="">
+                        </td>
+                        <td>{{ $cart['price'] }}</td>
 
+                        <td>
+                            <form action="{{ route('cart.update', $cart['product_id']) }}" method="POST">
+                                @csrf
+                                <input type="text" name="quantity" value="{{ $cart['quantity'] }}">
+                                <button type="submit" class="btn btn-success">Cap nhat gio hang</button>
+                            </form>
+
+                        </td>
+                        <td>
+                            {{ $cart['price'] * $cart['quantity'] }}
+                        </td>
+                        <td>
+
+
+                            <a href="{{ route('cart.remove', $cart['product_id']) }}"
+                                onclick="return confirm('Are you sure??')" class="btn btn-danger">Xoa</a>
+
+                        </td>
+                    </tr>
+                @endforeach
+
+            </tbody>
+
+        </table>
+        <h3>Total price: {{ $price }}</h3>
+
+        <a href="{{route('checkout.index')}}" class="btn btn-warning">Tien hanh thanh toan</button>
+
+        <a name="" id="" class="btn btn-primary" href="{{ route('cart.clear') }}" role="button">Clear all
+            cart</a>
             
-            <button type="button" class="btn btn-danger">Xoa</button>
-            
-            </td>
-        </tr>
-       
-       
-     
-       
-    </tbody>
-   
-</table>
-<h3>Total price: 100.00vn</h3>
 
-<button type="button" class="btn btn-warning">Tien hanh thanh toan</button>
 
-</div>
+
+    </div>
 @stop

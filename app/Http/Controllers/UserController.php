@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Customer;
 use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -71,6 +72,12 @@ class UserController extends Controller
             'status' => $request->status,
             'avartar' => $anh_user_avatar,
         ]);
+        // $user = Customer::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->ddpassword),
+           
+        // ]);
 
 
 

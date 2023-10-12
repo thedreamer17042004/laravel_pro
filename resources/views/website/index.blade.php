@@ -114,7 +114,7 @@
             @foreach($posts as $post)
             <div class="col-md-4 d-flex ftco-animate">
                 <div class="blog-entry align-self-stretch">
-                    <a href="blog-single.html" class="block-20" style="background-image: url({{$post->image}});">
+                    <a href="blog-single.html" class="block-20" style="background-image: url({{asset('/admin/images/admin/')}}/{{$post->image}});">
                     </a>
                     <div class="text py-4 d-block">
                         <div class="meta">
@@ -137,3 +137,19 @@
 @include('website.includes.index_about2')
 
 @stop
+
+
+@push('script')
+@if (Session::has('message_login'))
+<script>
+    toastr.options = {
+        "progressBar": true,
+        "closeButton": true
+    }
+    toastr.error("{{ Session::get('message_login') }}", 'Error', {
+        timeOut: 12000
+    });
+</script>
+@endif
+
+@endpush

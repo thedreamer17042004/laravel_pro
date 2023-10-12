@@ -1,4 +1,4 @@
-<section class="ftco-section">
+<section class="ftco-section" id="">
     <div class="container">
         <div class="row justify-content-center mb-5 pb-3">
             <div class="col-md-7 heading-section ftco-animate text-center">
@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-    <div class="container-wrap">
+    <div class="container-wrap" id="shop_home">
         <div class="row no-gutters d-flex">
             @foreach($products as $product)
             <div class="col-lg-4 d-flex ftco-animate">
@@ -20,7 +20,14 @@
                     <div class="text p-4">
                         <h3>{{$product->name}}</h3>
                         <p>{{$product->description}} </p>
-                        <p class="price"><span>${{$product->price}}</span> <a href="#" class="ml-2 btn btn-white btn-outline-white">Add to cart</a></p>
+                        <p class="price"><span>${{$product->price}}</span> 
+                        <form action="{{route('cart.add')}}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" value="{{$product->id}}">
+                            <input type="text" name="quantity" type="text" value="1" style="width: 30px">
+                            <button type="submit" class="ml-2 btn btn-white btn-outline-white">Add to cart</button>
+                        </form>
+                        </p>
                     </div>
                 </div>
             </div>

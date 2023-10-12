@@ -68,8 +68,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href=""><i class="fa fa-circle-o"></i> Posts</a></li>
-                    <li><a href=""><i class="fa fa-circle-o"></i> Add Post</a></li>
+                    <li><a href="{{route('admin.post.index')}}"><i class="fa fa-circle-o"></i> Posts</a></li>
+                    <li><a href="{{route('admin.post.create')}}"><i class="fa fa-circle-o"></i> Add Post</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -97,17 +97,7 @@
                   
                 </ul>
             </li>
-            <li class="treeview">
-                <a href="">
-                    <i class="fa fa-book"></i>
-                    <span>Coupon</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href=""><i class="fa fa-circle-o"></i> Coupon</a></li>
-                  
-                </ul>
-            </li>
+           
             <li class="treeview">
                 <a href="">
                     <i class="fa fa-share"></i>
@@ -115,7 +105,7 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href=""><i class="fa fa-circle-o"></i> My Profile</a></li>
+                    <li><a href="{{route('admin.profile.index')}}"><i class="fa fa-circle-o"></i> My Profile</a></li>
                   
                 </ul>
             </li>

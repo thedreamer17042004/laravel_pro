@@ -26,13 +26,13 @@ class Authenticate extends Middleware
 
 
 
-        $route = $request->route()->getName();
+        // $route = $request->route()->getName();
 
-        if($user->cant($route)) {
-            return redirect()->route('admin.error',
-             ['code'=>403]
-            );
-        }
+        // if($user->cant($route)) {
+        //     return redirect()->route('admin.error',
+        //      ['code'=>403]
+        //     );
+        // }
 
         
         return $next($request);

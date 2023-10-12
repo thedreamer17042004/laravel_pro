@@ -95,9 +95,6 @@ class ProductController extends Controller
 
 
       } else {
-         $new_image = rand() . '.' . $uploadfile->getClientOriginalExtension();
-         $uploadfile->move(public_path('/admin/images/admin/'), $new_image);   
-         dd($new_image);
 
          $request->validate([
             'add_product' => 'required|max:255',
@@ -107,6 +104,10 @@ class ProductController extends Controller
             'Business_Type' => 'required'
          ]);
 
+         $new_image = rand() . '.' . $uploadfile->getClientOriginalExtension();
+         $uploadfile->move(public_path('/admin/images/admin/'), $new_image);   
+
+        
          
       }
 
